@@ -9,13 +9,14 @@ class GameObject {
         this.type = EntityTypes.TYPE_DEFAULT_OBJECT;
         this.collisionChecks = 0;
         this.id = game.generateId();
+        this.color = 'red';
     }
 
     update(canvas) {
     }
 
     render(canvas) {
-        canvas.draw(this.x, this.y, this.width, this.height);
+        canvas.draw(this.x, this.y, this.width, this.height, this.color);
     }
 
     collide(object) {
