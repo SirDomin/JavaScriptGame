@@ -7,9 +7,11 @@ class Game {
         this.ticks = 0;
         this.canvas.addListener('keydown', this.onKeyDown);
         this.canvas.addListener('keyup', this.onKeyUp);
+        this.canvas.addListener('mousedown', this.onMouseDown);
 
         this.indexesToRemove = [];
 
+        this.devMode = true;
         this.canvas.setDimensions('500', '500');
     }
 
@@ -66,6 +68,20 @@ class Game {
         }
     }
 
+    getObjectAt = (x, y) => {
+        for(let i in this.gameObjects) {
+            if(this.gameObjects[i].checkCollision({
+                x: x,
+                y: y,
+                width: 1,
+                height: 1
+            })) {
+                this.gameObjects[i].color = 'blue';
+                console.log(object);
+            }
+        }
+    }
+
     outOfBound = (object, x) => {
         if (object.removeOnOutOfBound) {
             this.removeObject(object.id);
@@ -77,8 +93,8 @@ class Game {
     }
 
     generateId = () => {
-        return 'xxxxxx'.replace(/[x]/g, char => {
-            return parseInt(Math.random() * 10);
+        return 'xxxxxxxxx'.replace(/[x]/g, char => {
+            return Utils.random(0,9);
         })
     }
 
@@ -123,5 +139,13 @@ class Game {
 
     onKeyUp = (e) => {
         delete this.keysDown[e.keyCode];
+    }
+
+    onMouseDown = (e) => {
+        var rect = this.canvas.canvas.getBoundingClientRect();
+        let x = e.pageX - rect.x;
+        let y = e.pageY - rect.y;
+
+        this.getObjectAt(x ,y);
     }
 }
