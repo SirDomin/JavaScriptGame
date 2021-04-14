@@ -5,6 +5,9 @@ class Canvas{
         this.height = 0;
         this.createCanvas('500px', '500px');
         this.defaultColor = 'white';
+        this.defaultFont = "Arial";
+        this.defaultFontSize = "20px";
+        this.currentColor = 'white';
     }
 
     createCanvas(width, height) {
@@ -17,13 +20,23 @@ class Canvas{
     }
 
     write = (text, x, y) => {
+        this.context.fillStyle = this.defaultColor;
         this.context.fillText(text, x, y);
     }
 
-    draw = (x = 0, y = 0, w = 0, h = 0, color = 'red') => {
+    setFillColor = (color = this.defaultColor) => {
         this.context.fillStyle = color;
+    }
+
+    setFont = (font = this.defaultFont, size = this.defaultFontSize) => {
+        this.context.font = `${font} ${size}`;
+    }
+
+    draw = (x = 0, y = 0, w = 0, h = 0, color = 'red') => {
+        if (this.currentColor !== color) {
+            this.context.fillStyle = color;
+        }
         this.context.fillRect(x, y, w, h);
-        this.context.fillStyle = this.defaultColor;
     }
 
     clear() {
