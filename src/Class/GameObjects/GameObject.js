@@ -1,4 +1,7 @@
 class GameObject {
+    static COLLISION_TYPE_BOX = 1;
+    static COLLISION_TYPE_CIRCLE = 2;
+
     constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
@@ -6,6 +9,7 @@ class GameObject {
         this.height = height;
         this.removeOnOutOfBound = false;
         this.type = EntityTypes.TYPE_DEFAULT_OBJECT;
+        this.collisionType = GameObject.COLLISION_TYPE_BOX;
         this.collisionChecks = 0;
         this.id = game.generateId();
         this.color = 'red';

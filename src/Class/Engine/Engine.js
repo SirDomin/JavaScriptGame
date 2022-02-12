@@ -23,9 +23,6 @@ class Engine {
         this.gameObjects.forEach(gameObject => {
             gameObject.render(this.canvas);
         });
-
-        this.canvas.write(`FPS: ${this.fps}`, 50, 450);
-        this.canvas.write(`Objects: ${this.gameObjects.length}`, 20, 460);
     }
 
     run = () => {
@@ -54,6 +51,15 @@ class Engine {
 
     update = () => {
 
+    }
+
+    getData = () => {
+        return {
+            ticks: this.ticks,
+            fps: this.fps,
+            pause: this.pause,
+            objects: this.gameObjects.length
+        }
     }
     
     handleOutOfBound = () => {
@@ -100,7 +106,7 @@ class Engine {
     }
 
     getObjectById = (id) => {
-        return this.gameObjects.filter(object => object.id === id);
+        return this.gameObjects.filter(object => object.id === id)[0] ?? {};
     }
 
     inRange = (object1, object2) => {

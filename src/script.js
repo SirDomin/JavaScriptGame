@@ -6,7 +6,7 @@ game.addKeyHandler(37, player.moveLeft);
 game.addKeyHandler(32, player.shot);
 game.addKeyHandler(69, () => {
     game.pause = !game.pause;
-});
+}, true);
 
 game.addObject(player);
 

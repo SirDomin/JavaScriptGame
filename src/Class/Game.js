@@ -12,9 +12,17 @@ class Game extends Engine {
         this.debugger.debug(object);
     }
 
+    getData() {
+
+    }
+
     update = () => {
         if (this.devMode === true) {
             this.debugger.update();
+
+            document.getElementById('game-data').innerHTML = JSON.stringify(
+                this.getData(),
+                undefined, 4);
         }
     }
 }

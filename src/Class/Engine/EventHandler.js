@@ -12,10 +12,13 @@ class EventHandler {
     handleKeysDown = () => {
         for (let x in this.keyHandlers) {
             if (this.keysDown[x]) {
-                this.keyHandlers[x].callback();
                 if(this.keyHandlers[x].single) {
-                    delete this.keysDown[x];
+                    if (this.keyHandlers[x].handled === true) {
+                        continue;
+                    }
+                    this.keyHandlers[x].handled = true;
                 }
+                this.keyHandlers[x].callback();
             }
         }
     }
@@ -33,6 +36,8 @@ class EventHandler {
 
     onKeyUp = (e) => {
         delete this.keysDown[e.keyCode];
+
+        this.keyHandlers[e.keyCode].handled = false;
     }
 
     onMouseDown = (e) => {
