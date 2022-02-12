@@ -19,6 +19,20 @@
             height:500px;
         }
 
+        #game-settings, #game-info {
+            width: 100%;
+            margin-top: 1em;
+            color: lightgray;
+            font-family: "Comic Sans MS",serif;
+        }
+
+        .option input {
+            width: 40px;
+            background: teal;
+            border: solid 1px black;
+            border-radius: 5px;
+        }
+
         .main {
             display: flex;
         }
@@ -32,6 +46,40 @@
 
         <pre id="debug-object"></pre>
         <pre id="game-data"></pre>
+    </div>
+
+    <div id="game-settings">
+        Settings:
+        <div class="settings">
+            <div class="option">
+                <label for="game-objects-width">Game object width:</label>
+                <input id="game-objects-width" min="1" value="6" step="1" type="number">
+            </div>
+            <div class="option">
+                <label for="game-objects-margin">Game object margin:</label>
+                <input id="game-objects-margin" min="0" value="1.5" step="0.25" type="number">
+            </div>
+
+            <div>
+                <input type="button" id="restart-button" value="Restart">
+            </div>
+        </div>
+    </div>
+
+    <div id="game-info">
+        Info:
+        <div class="segment">
+            left arrow / right arrow: move
+        </div>
+        <div class="segment">
+            space: shot
+        </div>
+        <div class="segment">
+            E: pause
+        </div>
+        <div class="segment">
+            Click: Debug object
+        </div>
     </div>
 
     <script src="src/Class/Engine/Utils.js"></script>

@@ -37,7 +37,9 @@ class EventHandler {
     onKeyUp = (e) => {
         delete this.keysDown[e.keyCode];
 
-        this.keyHandlers[e.keyCode].handled = false;
+        if (this.keyHandlers[e.keyCode]){
+            this.keyHandlers[e.keyCode].handled = false;
+        }
     }
 
     onMouseDown = (e) => {

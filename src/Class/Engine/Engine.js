@@ -39,6 +39,10 @@ class Engine {
         requestAnimationFrame(this.run);
     }
 
+    destroy = () => {
+        this.run = function (){}
+    }
+
     updateTick = () => {
         this.gameObjects.forEach(gameObject => {
             gameObject.update();
