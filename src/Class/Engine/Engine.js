@@ -3,9 +3,7 @@ class Engine {
         this.canvas = canvas;
         this.eventHandler = new EventHandler(canvas);
         this.gameObjects = [];
-
         this.ticks = 0;
-       
         this.fps = 0;
         this.start = performance.now();
         this.indexesToRemove = [];
@@ -39,18 +37,23 @@ class Engine {
         if(!this.pause) {
             this.render();
         }
-        this.update();
+        this.updateTick();
         this.handleRemovedObjects();
         requestAnimationFrame(this.run);
     }
 
-    update = () => {
+    updateTick = () => {
         this.gameObjects.forEach(gameObject => {
             gameObject.update();
         });
 
+        this.update();
         this.eventHandler.handleKeysDown();
         this.handleOutOfBound();
+    }
+
+    update = () => {
+
     }
     
     handleOutOfBound = () => {
@@ -77,7 +80,6 @@ class Engine {
         return this.ticks;
     }
 
-    
     getObjectAt = (x, y) => {
         for(let i in this.gameObjects) {
             if(this.gameObjects[i].checkCollision({
@@ -95,6 +97,10 @@ class Engine {
         if (object.removeOnOutOfBound) {
             this.removeObject(object.id);
         }
+    }
+
+    getObjectById = (id) => {
+        return this.gameObjects.filter(object => object.id === id);
     }
 
     inRange = (object1, object2) => {

@@ -4,27 +4,47 @@
     <meta charset="UTF-8">
     <title>Game</title>
     <style>
+        body {
+            background: #0b1015;
+        }
+
+        #debug-object {
+            color: teal;
+            float: left;
+            margin: 10px;
+        }
+
         #game-container {
-            width:400px;
-            height:400px;
+            width:500px;
+            height:500px;
+        }
+
+        .main {
+            display: flex;
         }
     </style>
 </head>
 <body>
-    <div id="game-container">
+    <div class="main">
+        <div id="game-container">
 
+        </div>
+
+        <pre id="debug-object"></pre>
     </div>
-    <script src="src/Class/Utils.js"></script>
-    <script src="src/Class/Sprite.js"></script>
 
-    <script src="src/Class/EventHandler.js"></script>
-    <script src="src/Class/Engine.js"></script>
-    <script src="src/Class/Point.js"></script>
-    <script src="src/Class/EntityTypes.js"></script>
-    <script src="src/Class/GameObject.js"></script>
-    <script src="src/Class/Player.js"></script>
-    <script src="src/Class/Bullet.js"></script>
-    <script src="src/Class/Canvas.js"></script>
+    <script src="src/Class/Engine/Utils.js"></script>
+    <script src="src/Class/Engine/Sprite.js"></script>
+
+    <script src="src/Class/Engine/EventHandler.js"></script>
+    <script src="src/Class/Engine/Engine.js"></script>
+    <script src="src/Class/Engine/Debugger/Debugger.js"></script>
+    <script src="src/Class/GameObjects/Point.js"></script>
+    <script src="src/Class/GameObjects/EntityTypes.js"></script>
+    <script src="src/Class/GameObjects/GameObject.js"></script>
+    <script src="src/Class/GameObjects/Player.js"></script>
+    <script src="src/Class/GameObjects/Bullet.js"></script>
+    <script src="src/Class/Engine/Canvas.js"></script>
     <script src="src/Class/Game.js"></script>
     <script src="src/script.js"></script>
 </body>

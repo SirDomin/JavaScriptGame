@@ -28,6 +28,12 @@ class GameObject {
         return new Point(this.x + this.width / 2, this.y + this.height / 2);
     }
 
+    onClick() {
+        if(game.devMode === true) {
+           game.debug(this);
+        }
+    }
+
     moveTo(x, y) {
         this.target = new Point(x, y);
     }

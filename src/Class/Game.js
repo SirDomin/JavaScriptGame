@@ -5,8 +5,16 @@ class Game extends Engine {
         this.devMode = true;
         this.canvas.setDimensions('500', '500');
         this.pause = false;
+        this.debugger = new Debugger();
     }
 
-    update() {
+    debug(object) {
+        this.debugger.debug(object);
+    }
+
+    update = () => {
+        if (this.devMode === true) {
+            this.debugger.update();
+        }
     }
 }

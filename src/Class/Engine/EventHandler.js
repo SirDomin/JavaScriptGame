@@ -43,8 +43,7 @@ class EventHandler {
         game.gameObjects.
         filter(object => object.checkCollision(new Point(x, y)))
         .forEach(object => {
-            console.log(object);
-            object.color = 'blue';
+            object.onClick();
         })
     }
     
