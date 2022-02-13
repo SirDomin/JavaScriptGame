@@ -33,8 +33,7 @@ function reload() {
 }
 let game = false;
 
-reload();
-
+// reload();
 
 document.getElementById('game-objects-margin').oninput = () => {
     reload();
@@ -46,3 +45,7 @@ document.getElementById('game-objects-width').oninput = () => {
 document.getElementById('restart-button').onclick = () => {
    reload();
 }
+
+window.addEventListener('load', function() {
+   reload();
+})

@@ -23,6 +23,7 @@ class Engine {
         this.gameObjects.forEach(gameObject => {
             gameObject.render(this.canvas);
         });
+        this.canvas.renderScene();
     }
 
     run = () => {

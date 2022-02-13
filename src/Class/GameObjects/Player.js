@@ -12,7 +12,8 @@ class Player extends GameObject {
     }
 
     render(canvas) {
-        this.sprite.animate(canvas.context, this.x, this.y, this.width, this.height);
+        super.render(canvas);
+        // this.sprite.animate(canvas.context, this.x, this.y, this.width, this.height);
     }
 
     moveLeft = () => {
