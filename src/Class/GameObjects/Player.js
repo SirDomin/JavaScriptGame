@@ -3,7 +3,7 @@ class Player extends GameObject {
         super(x, y, width, height);
         this.speed = 2;
         this.lastShot = 0;
-        this.bulletCooldown = 1;
+        this.bulletCooldown = 5;
         this.type = EntityTypes. TYPE_PLAYER;
         this.sprite = new Sprite('spider2', 8, 32, 32, 1);
     }
@@ -27,7 +27,14 @@ class Player extends GameObject {
     shot = () => {
         if (this.canShot()) {
             this.lastShot = game.getTicks();
-            game.addObject(new Bullet(this, {width: 5, height: 5}));
+            let bullet = new Bullet(this, {width: 5, height: 5});
+
+            let enemy = game.gameObjects.filter(object => object.type === EntityTypes.TYPE_DEFAULT_OBJECT)[Math.floor(Math.random() * game.gameObjects.length)]
+
+            if (enemy) {
+                bullet.moveTo(enemy.x, enemy.y);
+            }
+            game.addObject(bullet);
         }
     }
 

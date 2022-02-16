@@ -14,11 +14,11 @@ class Engine {
         this.gameObjects.push(gameObject);
     }
 
-    addKeyHandler = (keyCode, callback, single = false) => {
+    addKeyHandler(keyCode, callback, single = false) {
         this.eventHandler.addKeyHandler(keyCode, callback, single);
     }
 
-    render = () => {
+    render() {
         this.canvas.clear();
         this.gameObjects.forEach(gameObject => {
             gameObject.render(this.canvas);
@@ -63,7 +63,8 @@ class Engine {
             ticks: this.ticks,
             fps: this.fps,
             pause: this.pause,
-            objects: this.gameObjects.length
+            objects: this.gameObjects.length,
+            renderingEngine: this.canvas.rendering
         }
     }
     

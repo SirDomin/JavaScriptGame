@@ -1,26 +1,43 @@
 class Canvas{
-    constructor(container) {
+    constructor(container, rendering) {
         this.container = document.querySelector(container);
         this.width = 0;
         this.height = 0;
-        this.createCanvas('500px', '500px');
         this.defaultColor = 'white';
         this.defaultFont = "Arial";
         this.defaultFontSize = "20px";
         this.currentColor = 'white';
         this.positions = [];
+        this.rendering = rendering;
+        this.createCanvas('500px', '500px');
+
     }
+
+    fullScreen() {
+        document.documentElement.requestFullscreen();
+        this.setDimensions(document.body.clientWidth, document.body.clientHeight)
+    }
+
+    exitFullScreen() {}
 
     createCanvas(width, height) {
         this.canvas = document.createElement('canvas')
         this.canvas.style = 'border:solid 1px black';
-        this.canvas.style.width = width;
-        this.canvas.style.height = height;
+        // this.canvas.style.width = width;
+        // this.canvas.style.height = height;
         this.container.append(this.canvas);
+
+
+        if (this.rendering === '2d') {
+
+            this.context = this.canvas.getContext('2d');
+            return;
+        }
+
         this.context = this.canvas.getContext(
             'webgl',
             {
-                'powerPreference': 'high-performance'
+                antialias: false,
             }
         );
 
@@ -56,28 +73,20 @@ class Canvas{
     }
 
     draw = (x = 0, y = 0, w = 0, h = 0, color = 'red') => {
-        if (this.currentColor !== color) {
-            this.context.fillStyle = color;
+        // console.log(color);
+        if (this.rendering === '2d') {
+            if (this.currentColor !== color) {
+                this.context.fillStyle = color;
+            }
+            this.context.fillRect(x, y, w, h);
+
+            return;
         }
 
-        // const positionBuffer = this.context.createBuffer();
-        //
-        // this.context.bindBuffer(this.context.ARRAY_BUFFER, positionBuffer);
-        //
-        // const positions = [
-        //     0.5,  0.5,
-        //     -0.5,  0.5,
-        //     0.5, -0.5,
-        //     -0.5, -0.5,
-        // ]
-        //
-        // this.context.bufferData(this.context.ARRAY_BUFFER,
-        //     new Float32Array(positions),
-        //     this.context.STATIC_DRAW);
-        //
-        // this.buffer = {
-        //     position: positionBuffer
-        // }
+        let colorValues = color.replace('rgb(', '').replace(')', '').split(',');
+
+        color = [colorValues[0]/255, colorValues[1]/255, colorValues[2]/255, 1];
+
         let x1 = x;
         let x2 = x + w;
         let y1 = y;
@@ -96,23 +105,13 @@ class Canvas{
             }
         );
 
-        //
-        // this.context.bufferData(
-        //     this.context.ARRAY_BUFFER,
-        //     new Float32Array([
-        //         x1, y1,
-        //         x2, y1,
-        //         x1, y2,
-        //         x1, y2,
-        //         x2, y1,
-        //         x2, y2,
-        //     ]),
-        //     this.context.STATIC_DRAW);
-
-        // this.context.fillRect(x, y, w, h);
     }
 
     renderScene() {
+        if (this.rendering === '2d') {
+            return;
+        }
+        webglUtils.resizeCanvasToDisplaySize(this.context.canvas);
 
         // Tell WebGL how to convert from clip space to pixels
         this.context.viewport(0, 0, this.context.canvas.width, this.context.canvas.height);
@@ -149,7 +148,7 @@ class Canvas{
             this.context.uniform2f(this.resolutionLocation, this.context.canvas.width, this.context.canvas.height);
 
             // set the color
-            this.context.uniform4fv(this.colorLocation, [Math.random(), Math.random(), Math.random(), 1]);
+            this.context.uniform4fv(this.colorLocation, object.color);
 
             // Draw the rectangle.
             let primitiveType = this.context.TRIANGLES;
@@ -157,24 +156,14 @@ class Canvas{
             let count = 6;
             this.context.drawArrays(primitiveType, offset, count);
         })
-
-
     }
 
     clear() {
         this.positions = [];
-        // turn on the scissor test.
-        // this.context.enable(this.context.SCISSOR_TEST);
+        if (this.rendering === '2d') {
+            this.context.clearRect(0, 0, this.width, this.height);
 
-// set the scissor rectangle.
-//         this.context.scissor(0, 0, this.width, this.height);
-
-// clear.
-//         this.context.clearColor(0, 0, 0, 0);
-//         this.context.clear(this.context.COLOR_BUFFER_BIT);
-// turn off the scissor test so you can render like normal again.
-//         this.context.disable(this.context.SCISSOR_TEST);
-        // this.context.clearRect(0, 0, this.width, this.height);
+        }
     }
 
     initShaderProgram() {

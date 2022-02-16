@@ -12,7 +12,7 @@ class GameObject {
         this.collisionType = GameObject.COLLISION_TYPE_BOX;
         this.collisionChecks = 0;
         this.id = game.generateId();
-        this.color = 'red';
+        this.color = 'rgb(255,0,0)';
         this.speed = (6) * (Math.random() + 0.1);
         this.target = null;
     }
